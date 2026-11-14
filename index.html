@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mon dashboard revente</title>
+<style>
+:root{--bg:#EAF0F8;--fg:#17243A;--mut:#5b6a84;--card:#FFFFFF;--bd:#d9e1ee;--acc:#7967E8;--on:#fff;--nav:#17243A;--ok:#0b7a3e;--okb:#d9f2e3;--bad:#a4261d;--badb:#fbdcd8;--wn:#8a5300;--wnb:#fdeccc;--inb:#e4defc;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1828;--fg:#EAF0F8;--mut:#9fb0c9;--card:#17243A;--bd:#2a3b57;--acc:#9a8cf2;--on:#0e1828;--nav:#0a1220;--ok:#6fd49a;--okb:#16382a;--bad:#ff9a90;--badb:#41201d;--wn:#f0bd6a;--wnb:#40300f;--inb:#2b2a55;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1828;--fg:#EAF0F8;--mut:#9fb0c9;--card:#17243A;--bd:#2a3b57;--acc:#9a8cf2;--on:#0e1828;--nav:#0a1220;--ok:#6fd49a;--okb:#16382a;--bad:#ff9a90;--badb:#41201d;--wn:#f0bd6a;--wnb:#40300f;--inb:#2b2a55;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-variant-numeric:tabular-nums}
+.app{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:100%}
+.side{background:var(--nav);color:#dbe3f2;padding:18px 12px;position:sticky;top:env(safe-area-inset-top,0px);align-self:start;display:flex;flex-direction:column;gap:4px;border-radius:0 18px 18px 0}
+.brand{font-weight:700;color:#fff;font-size:1.05rem;padding:4px 10px 14px;letter-spacing:-.01em}.brand b{color:#9a8cf2}
+.side button{font:inherit;display:flex;gap:10px;align-items:center;background:none;border:0;color:#c3cde2;padding:9px 12px;border-radius:10px;cursor:pointer;text-align:left}
+.side button svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.side button.on{background:#7967E8;color:#fff;font-weight:600}.side button:hover:not(.on){background:rgba(255,255,255,.08)}
+#sb{margin-top:auto;font-size:.78rem;color:#9fb0c9;padding:10px 12px}
+.mc{min-width:0}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:18px 22px 6px;position:relative}
+h1{font:700 1.5rem/1.2 system-ui,sans-serif;letter-spacing:-.02em;margin:0}#mind{color:var(--acc);margin:2px 0 0;font-size:.9rem;cursor:pointer}
+.tools{display:flex;gap:8px;align-items:center}.tools input{width:auto}
+#bell{position:relative;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:8px 10px;cursor:pointer;color:var(--fg)}
+#bell svg{width:20px;height:20px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#bell i{position:absolute;top:-6px;right:-6px;background:#d92d20;color:#fff;border-radius:99px;font:700 .7rem/1 system-ui;padding:3px 6px;font-style:normal}
+#np{position:absolute;right:22px;top:66px;width:min(420px,calc(100% - 44px));background:var(--card);border:1px solid var(--bd);border-radius:16px;box-shadow:0 16px 50px rgba(23,36,58,.25);z-index:5;padding:10px;max-height:70vh;overflow:auto}
+.nt{display:block;width:100%;text-align:left;font:inherit;color:var(--fg);background:none;border:0;border-left:4px solid var(--bd);border-radius:8px;padding:8px 10px;margin:4px 0;cursor:pointer}.nt:hover{background:var(--bg)}
+.nt.bad{border-color:var(--bad)}.nt.wn{border-color:#e0a02a}.nt.ok{border-color:var(--ok)}.nt.in{border-color:var(--acc)}.nt b{display:block}.nt span{color:var(--mut);font-size:.85rem}
+main{padding:10px 22px 60px}
+:is(button,input,select,summary):focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+section{display:none}section.on{display:block}
+h2{font-size:1.05rem;margin:22px 0 8px;letter-spacing:-.01em}h3{font-size:.95rem;margin:0 0 8px}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+label{display:flex;flex-direction:column;font-size:.78rem;color:var(--mut);gap:3px}
+input,select{font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:7px 8px;width:100%}
+td input,td select{min-width:74px;padding:5px 6px}
+.k{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:12px 0}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(23,36,58,.04),0 8px 24px rgba(23,36,58,.05);min-width:0}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px;margin:14px 0}
+.big{font:700 1.75rem/1.15 system-ui,sans-serif;letter-spacing:-.02em;margin:2px 0}.mut{color:var(--mut);font-size:.85rem}
+.pos{color:var(--ok)}.neg{color:var(--bad)}
+.tag{display:inline-block;border-radius:99px;padding:2px 10px;font-size:.78rem;font-weight:600;white-space:nowrap}
+.ok{background:var(--okb);color:var(--ok)}.bad{background:var(--badb);color:var(--bad)}.wn{background:var(--wnb);color:var(--wn)}.in{background:var(--inb);color:var(--acc)}
+.sc{overflow-x:auto;border-radius:12px}
+table{border-collapse:collapse;width:100%;background:var(--card);border:1px solid var(--bd)}
+th,td{padding:7px 9px;border-bottom:1px solid var(--bd);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}th{font-size:.76rem;color:var(--mut);font-weight:600;background:var(--bg)}
+tr.g1 td{background:var(--inb);font-weight:700;color:var(--acc);text-align:left}tr.sum td{font-weight:700;border-top:2px solid var(--fg)}td.w{color:var(--ok);font-weight:700}
+.br{display:grid;grid-template-columns:minmax(80px,140px) 1fr auto;gap:8px;align-items:center;margin:7px 0;font-size:.88rem}
+.bt{height:10px;background:var(--bd);border-radius:99px;overflow:hidden;display:flex}.bt i{display:block;height:100%;background:var(--acc)}
+.mo{display:flex;align-items:flex-end;gap:10px;height:150px;margin-top:8px}.mo div{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;font-size:.72rem;color:var(--mut)}
+.mo p{display:flex;gap:3px;align-items:flex-end;height:100%;margin:0}.mo i{display:block;width:14px;border-radius:5px 5px 0 0;min-height:2px}
+.btn{font:inherit;border:1px solid var(--acc);background:var(--acc);color:var(--on);border-radius:10px;padding:8px 14px;cursor:pointer;font-weight:600}
+.btn.a{background:none;color:var(--acc)}.btn.x{background:none;border-color:var(--bd);color:var(--bad);padding:5px 9px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;align-items:center}
+details{margin:10px 0;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:10px 14px}summary{cursor:pointer;font-weight:600;color:var(--acc)}
+.oc{margin:12px 0}.oc .hd{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+#lock{max-width:380px;margin:14vh auto;padding:26px;background:var(--card);border-radius:20px;text-align:center;box-shadow:0 12px 40px rgba(23,36,58,.15)}
+@media (max-width:860px){.app{display:block}.side{position:static;flex-direction:row;overflow-x:auto;border-radius:0 0 18px 18px;padding:10px}.brand,#sb{display:none}.side button{white-space:nowrap;padding:8px 12px}.bar{padding:14px 14px 4px}main{padding:8px 14px 60px}#np{right:14px}}
+</style></head><body>
+<div id="lock" hidden></div>
+<div class="app" id="app">
+<aside class="side"><div class="brand">Revente <b>Pro</b></div>
+<button class="on" data-t="t0"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8M5 10v10h14V10"/></svg>Tableau de bord</button>
+<button data-t="t1"><svg viewBox="0 0 24 24"><path d="M3 7h18l-2 12H5L3 7zM8 7a4 4 0 018 0"/></svg>Ventes et colis</button>
+<button data-t="t2"><svg viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8zM3 8l9 5 9-5M12 13v8"/></svg>Commandes et stock</button>
+<button data-t="t3"><svg viewBox="0 0 24 24"><path d="M2 17h12V6H2v11zM14 10h4l4 4v3h-8M6 19a2 2 0 100-4 2 2 0 000 4zM17 19a2 2 0 100-4 2 2 0 000 4z"/></svg>Transitaires</button>
+<button data-t="t4"><svg viewBox="0 0 24 24"><path d="M3 20h18M6 16V9M11 16V4M16 16v-5M21 16V7"/></svg>Veille Vinted</button>
+<button data-t="t5"><svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6zM19 12l2-1-2-4-2 1-2-1V5h-4v2l-2 1-2-1-2 4 2 1v2l-2 1 2 4 2-1 2 1v2h4v-2l2-1 2 1 2-4-2-1v-2z"/></svg>Paramètres</button>
+<div id="sb">…</div></aside>
+<div class="mc"><header class="bar"><div><h1>Bienvenue Manuella</h1><p id="mind" title="Clique pour une autre phrase"></p></div>
+<div class="tools"><button class="btn a" data-m="-1">◀</button><input type="month" data-p="mo" id="mi"><button class="btn a" data-m="1">▶</button><button class="btn a" data-m="0">Tout</button>
+<span id="sy" class="mut" style="font-size:.78rem;max-width:230px;text-align:right"></span><button id="bell" aria-label="Notifications"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0112 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 004 0"/></svg><i id="bc" hidden></i></button></div>
+<div id="np" hidden></div></header>
+<main>
+<section id="t0" class="on"><div id="dash"></div></section>
+<section id="t1"><h2 style="margin-top:6px">Ajouter une vente</h2><div class="c"><div class="g" id="nf"></div><div class="row"><button class="btn" data-newsale>Enregistrer la vente</button></div></div>
+<h2>Suivi des colis</h2><p class="mut">Fais avancer chaque vente : à expédier, expédié, livré, puis « Fonds reçus » quand l’acheteur a confirmé et que l’argent est disponible. Seules les ventes « Fonds reçus » comptent dans le CA réel.</p><div id="pipe" class="pl"></div>
+<details open><summary>Produits en stock (modifier ou ajouter)</summary><div class="sc" style="margin-top:8px"><table id="lnt"></table></div><div class="row"><button class="btn" data-addln>Ajouter un produit</button></div></details>
+<details><summary>Toutes les ventes (modifier en détail)</summary><div class="sc" style="margin-top:8px"><table id="sat"></table></div></details></section>
+<section id="t2"><h2 style="margin-top:6px">Mes commandes et mon stock</h2><p class="mut">Une commande = ses produits + les frais du transitaire. Exemple : 10 vêtements à 5 € et 170 € de frais = 17 € de transport par article, soit 22 € de coût unitaire. Le stock = quantité commandée − pièces vendues.</p><div id="cmd"></div><div class="row"><button class="btn" data-add="cd">Ajouter une commande</button></div>
+<h2>Fiabilité des transitaires</h2><div class="sc"><table id="cds"></table></div></section>
+<section id="t3"><h2 style="margin-top:6px">Comparer pour mon colis</h2><div class="g" id="colin"></div><div class="sc" style="margin-top:12px"><table id="res"></table></div>
+<h2>Prix en € selon le poids facturé</h2><div class="sc"><table id="wt"></table></div>
+<h2>Mes transitaires et leurs grilles de prix (en RMB)</h2><div id="trg"></div><div class="row"><button class="btn" data-add="tr">Ajouter un transitaire</button></div></section>
+<section id="t4"><h2 style="margin-top:6px">Ma veille Vinted</h2><div class="c"><h3>Top des produits (coefficient : prix vendu ÷ coût unitaire)</h3><div id="vtop"></div></div><div class="sc" style="margin-top:12px"><table id="vet"></table></div><div class="row"><button class="btn" data-add="ve">Ajouter un article</button></div></section>
+<section id="t5"><div id="prm"></div></section>
+</main></div></div>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],H=(s,h)=>{const e=$(s);if(e)e.innerHTML=h};
+const fin=x=>typeof x==='number'&&isFinite(x);
+const E=x=>fin(x)?(x===0?0:x).toLocaleString('fr-FR',{style:'currency',currency:'EUR'}):'—';
+const N=(x,d=1)=>fin(x)?x.toLocaleString('fr-FR',{maximumFractionDigits:d}):'—';
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const uid=()=>Math.random().toString(36).slice(2,8),ym=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'),today=()=>new Date().toISOString().slice(0,10);
+const days=(a,b)=>a&&b?Math.round((new Date(b)-new Date(a))/864e5):NaN,ago=d=>d?Math.floor((Date.now()-new Date(d))/864e5):NaN,mk=d=>(d||'').slice(0,7);
+const LS=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);v===null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(x){}};
+const addd=(d,n)=>{if(!d)return'';const t=new Date(d+'T12:00:00');t.setDate(t.getDate()+n);return t.toISOString().slice(0,10)},fmtD=d=>d?new Date(d+'T12:00:00').toLocaleDateString('fr-FR'):'—';
+const hs=s=>{let k=5381;for(const c of s)k=(k*33^c.charCodeAt(0))>>>0;return k.toString(36)};
+const NETMODE=typeof location!=='undefined'&&/^https?:$/.test(location.protocol)&&!window.claude;let KEY='';const lk=()=>'rev5'+(KEY?'_'+KEY.slice(0,8):'');
+const MIND=['On ne gère bien que ce qu’on mesure.','Un bon produit se prouve en petit avant de se commander en grand.','Chiffre d’affaires pour la fierté, bénéfice pour vivre.','La régularité bat l’intensité : un colis, une vente, une ligne notée chaque jour.','Ne confonds jamais ce que tu encaisses avec ce que tu gardes.','Protège ta marge : un prix trop bas se paie longtemps.','Réinvestis intelligemment et garde toujours une réserve.'];
+const SV=(id,n,d,ap,af,bp,cp,mn=0,fl='')=>({id,n,d,fl,mn,am:21,ap,af,bm:100,bp,bf:0,cp,cf:0});
+const D0=()=>({v:6,del:{},tp:0,par:{cb:12.3,cf:.1,vl:'Non',rate:7.85,cm:3,ob:500,fq:'Mensuelle',dmax:45,mant:'',conf:2,dl:{'Mondial Relay':4,'Vinted Go':3,'Chronopost':2,'Autre':5}},mo:ym(new Date()),obm:{},cs:{L:60,l:45,H:40,wr:8,n:1,pc:100},nf:{},
+tr:[{id:'sealy',n:'Sealy (Hangshunda)',sv:[SV('a','Avion standard',6000,62.5,150,59.5,55.5),SV('b','Avion batteries',6000,65.5,150,62.5,59.5),SV('c','Avion sensible',6000,78.5,150,78.5,75.5),SV('d','Mer standard',0,21.5,0,21.5,18.5,21),SV('e','Camion standard',0,29.5,0,29.5,26.5,21),SV('f','Mer sensible',0,35.5,0,35.5,31.5,21)]},{id:'inv',n:'Invincible (Huanshitong)',sv:[SV('a','Avion',8000,65,0,65,65,0,'130,190,250,310'),SV('b','Mer (26 RMB/kg, à confirmer)',0,26,0,26,26)]}],
+cd:[{id:'c1',n:'CMD1',d:'',tf:'sealy',pv:'',su:'',de:'',dr:'',fr:177.28,pa:0,ln:[{id:'p1',n:'Sac 38 cm',q:5,pu:10.63,pv:65.99},{id:'p2',n:'Sac maxi flat',q:5,pu:11.32,pv:100}]}],
+sa:[],ve:[{n:'Sac cabas vintage sans marque',da:today(),ni:'Sacs',de:'Forte',vi:'Rapide',co:'',pr:0,cp:0,cf:'À vérifier',ty:'Tendance de fond',c7:'',c30:''},{n:'Lampe champignon',da:today(),ni:'Maison',de:'Forte',vi:'',co:'',pr:0,cp:0,cf:'À vérifier',ty:'Micro-tendance',c7:'',c30:''}]});
+const ADD={tr:()=>({id:uid(),n:'Nouveau transitaire',sv:[SV(uid(),'Avion',6000,0,0,0,0)]}),ln:()=>({id:uid(),n:'Nouveau produit',q:1,pu:0,pv:0}),
+cd:()=>({id:uid(),n:'CMD'+(S.cd.length+1),d:today(),tf:S.tr[0]?.id||'',pv:'',su:'',de:'',dr:'',fr:0,pa:0,ln:[ADD.ln()]}),
+ve:()=>({n:'Nouvel article',da:today(),ni:'Sacs',de:'',vi:'',co:'',pr:0,cp:0,cf:'',ty:'',c7:'',c30:''})};
+function conv4(o){const n=D0(),pr=o.pr||[],base=o.cd||[];n.par={...n.par,...(o.par||{})};n.tr=o.tr||n.tr;n.cs=o.cs||n.cs;n.mo=o.mo||n.mo;n.obm=o.obm||{};n.ve=o.ve||[];
+n.cd=base.map(c=>{const ln=pr.filter(p=>p.cd===c.id).map(p=>({id:p.id,n:p.n,q:p.q,pu:p.pu,pv:p.pd})),pc=ln.reduce((a,l)=>a+l.q,0);return{id:c.id,n:c.n,d:c.d,tf:c.tf,pv:c.pv,su:c.su,de:c.de,dr:c.dr,fr:(c.fr>0?c.fr:c.fa>0?c.fa*pc:0)+(+c.ot||0),pa:c.pa||0,ln}});
+const or=pr.filter(p=>!base.some(c=>c.id===p.cd));if(or.length)n.cd.push({id:'c0',n:'Sans commande',d:'',tf:n.tr[0]?.id||'',pv:'',su:'',de:'',dr:'',fr:0,pa:0,ln:or.map(p=>({id:p.id,n:p.n,q:p.q,pu:p.pu,pv:p.pd}))});
+n.sa=(o.sa||[]).map(x=>({...x,l:x.p}));return n}
+const mig=o=>{const d=D0(),r={...d,...o,par:{...d.par,...(o.par||{})}};r.par.dl={...d.par.dl,...((o.par||{}).dl||{})};if(!o.v&&(+r.par.cm||0)<3)r.par.cm=3;r.v=6;r.del=o.del||{};r.tp=o.tp||0;r.ve=(r.ve||[]).map((v,i)=>v.id?v:{...v,id:'ve'+hs((v.n||'')+i)});return r};
+let S=mig({});try{const j=LS(lk()),o=LS('rev4');if(j)S=mig(JSON.parse(j));else if(o)S=mig(conv4(JSON.parse(o)))}catch(x){}
+const cotp=()=>(+S.par.cb||0)+(+S.par.cf||0)+(S.par.vl==='Oui'?1:0);
+/* base de données en ligne : sauvegarde locale + synchronisation en direct entre appareils */
+const AR=['cd','sa','tr','ve'],cj=v=>JSON.stringify(v,(k,x)=>x&&typeof x==='object'&&!Array.isArray(x)?Object.fromEntries(Object.entries(x).sort()):x);
+function merge(a,b,pref){let ch=false;const r={...a},dl={...(a.del||{})};
+for(const k in (b.del||{}))if((b.del[k]||0)>(dl[k]||0)){dl[k]=b.del[k];ch=true}r.del=dl;
+AR.forEach(k=>{const m=new Map();(a[k]||[]).forEach(x=>m.set(x.id,x));
+(b[k]||[]).forEach(x=>{const o=m.get(x.id);if(!o){m.set(x.id,x);ch=true;return}if(cj(x)===cj(o))return;const tx=x._t||0,to_=o._t||0;if(tx>to_||(tx===to_&&(pref==='b'||cj(x)>cj(o)))){m.set(x.id,x);ch=true}});
+const out=[...m.values()].filter(x=>(dl[x.id]||0)<=(x._t||0));if(out.length!==m.size)ch=true;r[k]=out});
+const sb=b.tp||0,sa=a.tp||0;if(b.par&&(sb>sa||(!sa&&pref==='b'&&cj([b.par,b.obm,b.cs])!==cj([a.par,a.obm,a.cs])))){r.par=b.par;r.obm=b.obm||{};r.cs=b.cs||a.cs;r.tp=sb;ch=true}
+return[r,ch]}
+const touch=p=>{const k=p.split('.'),n=Date.now();if(AR.includes(k[0])&&S[k[0]][+k[1]])S[k[0]][+k[1]]._t=n;else if(['par','obm','cs'].includes(k[0]))S.tp=n};
+let DBI=null,LEGACY=null,READY=false,busy=false,again=false,dirty=false,gen=0,tm=0,SY='…',pend=false,UID='';
+const DEV=uid(),to=(p,ms=12000)=>Promise.race([p,new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),ms))]),hm=()=>new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}),POLL=10000;
+function bg(t,s){if(s)SY=s;['#sb','#sy'].forEach(q=>{const e=$(q);if(e)e.textContent=t});const e=$('#syd');if(e)e.innerHTML='<b>'+esc(t)+'</b>'+(UID?' · compte '+esc(UID.slice(0,6))+'…':'')+' · '+S.cd.length+' commande(s), '+S.sa.length+' vente(s)'}
+const save=()=>{gen++;dirty=true;LS(lk(),JSON.stringify(S));clearTimeout(tm);tm=setTimeout(push,700)};
+function applyRemote(){const a=document.activeElement;if(a&&/INPUT|SELECT/.test(a.tagName||'')&&a.closest&&a.closest('main')){pend=true;return}rAll(true)}
+const remoteGet=async()=>{const x=await to(DBI.get());return x&&x.j?mig(JSON.parse(x.j)):null};
+async function push(force){if(!DBI||!READY){if(force)cloud();return}if(busy){again=true;return}busy=true;const g=gen;bg('⏳ Synchronisation…');
+try{const r=await remoteGet();if(r){const[m,ch]=merge(S,r,'');if(ch){S=m;LS(lk(),JSON.stringify(S));applyRemote()}}
+if(!r||force||merge(r,S,'')[1])await to(DBI.set({j:JSON.stringify(S),dev:DEV,ts:Date.now()}));
+if(g===gen)dirty=false;bg('☁️ Synchronisé à '+hm(),'ok')}
+catch(e){bg('⚠️ Base en ligne injoignable : modifications gardées, envoi automatique','err');setTimeout(push,20000)}
+busy=false;if(again){again=false;push()}}
+function onRemote(x){try{if(!x||!x.j)return;const r=mig(JSON.parse(x.j)),[m,ch]=merge(S,r,'');if(ch){S=m;LS(lk(),JSON.stringify(S));applyRemote();bg('☁️ Mis à jour depuis un autre appareil à '+hm(),'ok')}if(merge(r,S,'')[1])save()}catch(e){}}
+async function poll(){if(!DBI||!READY||busy)return;try{onRemote(await to(DBI.get()))}catch(e){}}
+const sha=async s=>{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('revente|'+s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')};
+async function netGet(){const r=await to(fetch('/api/state',{headers:{'x-sync-key':KEY},cache:'no-store'}));if(r.status===404)throw new Error('404');if(!r.ok)throw new Error('http'+r.status);const t=await r.text();return t&&t!=='null'?JSON.parse(t):null}
+async function netSet(o){const r=await to(fetch('/api/state',{method:'PUT',headers:{'x-sync-key':KEY,'content-type':'application/json'},body:JSON.stringify(o)}));if(!r.ok)throw new Error('http'+r.status)}
+async function cloud(){bg('⏳ Connexion à la base en ligne…','…');try{
+if(window.claude){const c=window.claude,[u,d]=await to(Promise.all([c.use('user'),c.use('db')])),id=u&&await u.id();if(!d||!id){bg('📱 Base en ligne indisponible : données sur cet appareil','local');return}UID=id;
+const ref=d.doc('data/users/'+id+'/state5');LEGACY=d.doc('data/users/'+id+'/state');DBI={get:async()=>{const s=await ref.get();return s.exists?s.data():null},set:o=>ref.set(o),listen:cb=>ref.onSnapshot(s=>cb(s.exists?s.data():null),()=>bg('⚠️ Synchronisation interrompue : recharge la page','err'))}}
+else if(NETMODE&&KEY){DBI={get:netGet,set:netSet,listen:cb=>{setInterval(poll,POLL);document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll()});addEventListener('focus',()=>poll())}}}
+else{bg('📱 Hors ligne : données enregistrées sur cet appareil seulement','local');return}
+const x=await to(DBI.get());
+if(x&&x.j){const[m]=merge(S,mig(JSON.parse(x.j)),'b');S=m}else if(LEGACY){const od=await to(LEGACY.get());if(od.exists&&!LS(lk()))S=mig(conv4(JSON.parse(od.data().j)))}
+READY=true;LS(lk(),JSON.stringify(S));rAll(true);await push();DBI.listen(onRemote)}
+catch(e){bg(e.message==='404'?'⚠️ Ce site n’a pas la fonction de synchronisation (voir LISEZ-MOI)':'⚠️ Base en ligne injoignable : données gardées sur l’appareil','err');if(e.message!=='404')setTimeout(cloud,15000)}}
+const gp=p=>p.split('.').reduce((o,k)=>o[k],S),sp=(p,v)=>{const k=p.split('.');k.slice(0,-1).reduce((o,x)=>o[x],S)[k.pop()]=v};
+const inp=(p,t,o,x)=>{const v=gp(p);if(o)return`<select data-p="${p}">${o.map(y=>{const[a,b]=Array.isArray(y)?y:[y,y];return`<option value="${esc(a)}"${a==v?' selected':''}>${esc(b)||'—'}</option>`}).join('')}</select>`;
+return`<input data-p="${p}" type="${t||'number'}"${t?'':' step="any" inputmode="decimal"'} value="${esc(v)}"${x||''}>`};
+/* tarifs transitaires */
+const fwc=(f,w)=>{if(!(w>0))return 0;if(f.mn&&w<f.mn)return NaN;const fl=String(f.fl).split(',').map(Number).filter(Boolean);if(fl.length&&w<=fl.length)return fl[Math.max(1,Math.ceil(w))-1];return w<f.am?w*f.ap+f.af:w<=f.bm?w*f.bp+f.bf:w*f.cp+f.cf};
+const allSv=()=>S.tr.flatMap(t=>t.sv.map(s=>({t,s})));
+function colis(){const c=S.cs,r=S.par.rate||1,v=c.L*c.l*c.H*c.n,re=c.wr*c.n;return allSv().map(({t,s})=>{const vol=s.d?v/s.d:0,w=Math.max(re,vol),tt=fwc(s,w)/r;return{t:t.n,n:s.n,w,vol,re,tt,pp:tt/(c.pc||1)}})}
+/* commandes, produits, ventes : tout part de la commande */
+const LN=()=>S.cd.flatMap((c,i)=>c.ln.map((l,j)=>({c,l,i,j}))),lf=id=>LN().find(x=>x.l.id===id);
+function cq(i){const c=S.cd[i],pc=c.ln.reduce((a,l)=>a+l.q,0),fr=+c.fr||0;return{pc,fpp:pc?fr/pc:NaN,tot:fr,st:c.dr?'Reçue':c.de?'En transit':'Commandée',dl:days(c.d,c.dr),att:c.dr?NaN:ago(c.d),pb:pc?c.pa/pc:NaN}}
+function cl(i,j){const c=S.cd[i],l=c.ln[j],u=cq(i).fpp||0,cu=l.pu+u,so=S.sa.filter(x=>x.l===l.id),vd=so.filter(x=>x.st!=='Remboursé / retour').reduce((a,x)=>a+x.q,0),lo=so.filter(x=>x.st==='Remboursé / retour'&&x.rt==='Perdu').reduce((a,x)=>a+x.q,0),stock=l.q-vd-lo,cD=l.pv/cu;
+return{u,cu,cD,mg:l.pv-cu,v:!(l.pv>0)?'À COMPLÉTER':cD>=S.par.cm?'RENTABLE':'PAS ASSEZ RENTABLE',pmin:cu*S.par.cm,vd,stock,cs:Math.max(0,stock)*cu}}
+const PEND=['À expédier','Expédié','Livré'];
+function cs(i){const x=S.sa[i],f=lf(x.l),cu=f?cl(f.i,f.j).cu:0,tot=x.pu*x.q,cg=cu*x.q,rf=x.st==='Remboursé / retour',re=x.st==='Fonds reçus',pe=PEND.includes(x.st);
+const fd=x.de&&['Expédié','Livré'].includes(x.st)?addd(x.de,(+S.par.dl[x.tp]||+S.par.dl['Autre']||5)+(+S.par.conf||0)):'';
+return{fd,fdt:x.st==='À expédier'?'Après expédition':fd?fmtD(fd):'—',late:!!fd&&fd<today(),tot,cg,real:re?tot:0,pend:pe?tot:0,benR:re?tot-cg:0,benP:pe?tot-cg:0,ben:rf?0:tot-cg,loss:rf?(+x.fr||0)+(x.rt==='Perdu'?cg:0):0,tv:days(x.dl,x.d),al:x.st==='À expédier'&&ago(x.d)>=3?'EN RETARD':x.st==='À expédier'?'À expédier':x.d&&x.dl&&x.d<x.dl?'Dates incohérentes':''}}
+function cv(i){const v=S.ve[i],cx=v.pr/v.cp,o=x=>({v:x,cx,j7:v.da?fmtD(addd(v.da,7)):'—',j30:v.da?fmtD(addd(v.da,30)):'—'});if(v.cf==='Interdit')return o('ÉCARTER');if(v.c7==='Baisse'||v.c30==='Baisse')return o('NE PAS RACHETER');
+if(!v.de||!v.vi||!v.co||!(v.pr>0)||!(v.cp>0)||!v.cf)return o('À COMPLÉTER');if(v.cf==='À vérifier')return o('VÉRIFIER');const g=(m,k)=>m[k]??0,pt=g({Forte:2,Moyenne:1},v.de)+g({Rapide:2,Moyenne:1},v.vi)+g({Faible:2,Moyenne:1},v.co)+(cx>=S.par.cm?2:cx>=S.par.cm-.5?1:0);
+return o(pt>=6&&cx>=S.par.cm&&v.ty!=='Micro-tendance'?'ACHETER':pt>=4?'TESTER PETIT':'ÉCARTER')}
+const C={sa:i=>cs(+i),cd:i=>cq(+i),ve:i=>cv(+i),ln:x=>{const[i,j]=x.split('.');return cl(+i,+j)}};
+const inM=(d,m)=>!m||mk(d)===m;
+function agg(m){const r={caR:0,caP:0,soon:0,ben:0,benP:0,loss:0,ref:0,n:{}};S.sa.forEach((x,i)=>{if(!inM(x.d,m))return;const k=cs(i);r.caR+=k.real;r.caP+=k.pend;r.ben+=k.benR;r.benP+=k.benP;r.loss+=k.loss;if(x.st==='Remboursé / retour')r.ref+=k.tot;if(PEND.includes(x.st)&&k.fd&&k.fd<=addd(today(),7))r.soon+=k.tot;r.n[x.st]=(r.n[x.st]||0)+1});r.cot=r.caR*cotp()/100;r.net=r.ben-r.loss-r.cot;return r}
+function stk(){let c=0,vr=0;LN().forEach(({l,i,j})=>{const k=cl(i,j),s=Math.max(0,k.stock);c+=s*k.cu;vr+=s*l.pv});const t=1-cotp()/100;return{c,vr,b1:vr-c,a1:vr*t-c}}
+const obj=m=>S.obm[m]??S.par.ob,ML=m=>{if(!m)return'toute la période';const[y,k]=m.split('-');return new Date(+y,+k-1,1).toLocaleDateString('fr-FR',{month:'long',year:'numeric'})},curM=()=>S.mo&&S.mo!=='all'?S.mo:'';
+const TP=['Mondial Relay','Vinted Go','Chronopost','Autre'],VM=['','Acheter','Tester petit','Écarter','À étudier'],ST=['À expédier','Expédié','Livré','Fonds reçus','Remboursé / retour'],PAYS=['France','Espagne','Allemagne','Italie','Belgique','Pays-Bas','Portugal','Autre'];
+const FQ=['','Forte','Moyenne','Faible'],VQ=['','Rapide','Moyenne','Lente'],CQ=['','Faible','Moyenne','Forte'],CF=['','OK','À vérifier','Interdit'],TY=['','Évergreen','Tendance de fond','Micro-tendance','Saisonnier'],BA=['','Monte','Stable','Baisse'],NI=['Sacs','Maison','Mode','Beauté','Enfant','Électronique','Autre'];
+const PC=['ACHETER','RENTABLE','Fonds reçus','Reçue'],WC=['TESTER PETIT','VÉRIFIER','À COMPLÉTER','À expédier','Expédié','Livré','Dates incohérentes','En transit','Commandée'];
+function fmt(v,m){if(m==='e')return E(v);if(m==='p')return fin(v)?N(v*100,0)+' %':'—';if(m==='x')return fin(v)?'x'+N(v,2):'—';if(m==='n')return fin(v)?N(v,0):'—';return v}
+const cc=(a,i,f,m)=>`<span data-c="${a}:${i}:${f}" data-m="${m}"></span>`;
+function tbl(id,a,cols){H(id,'<tr>'+cols.map(c=>`<th>${c[1]}</th>`).join('')+'<th></th></tr>'+S[a].map((r,i)=>'<tr>'+cols.map(c=>{const[k,,t,o,x]=c;if(t==='c')return`<td>${cc(a,i,k,o)}</td>`;
+const at=x?(x.min?` min="${esc(r[x.min])}"`:'')+(x.max?` max="${esc(r[x.max])}"`:''):'';return`<td>${inp(a+'.'+i+'.'+k,t==='t'?'text':t==='d'?'date':'',t==='s'?(typeof o==='function'?o():o):0,at)}</td>`}).join('')+`<td><button class="btn x" data-del="${a}.${i}">Supprimer</button></td></tr>`).join(''))}
+const lno=()=>LN().map(x=>[x.l.id,x.l.n+' ('+x.c.n+')']),tro=()=>S.tr.map(t=>[t.id,t.n]);
+const SAC=[['l','Produit','s',lno],['dl','Date en ligne','d','',{max:'d'}],['d','Date de vente','d','',{min:'dl'}],['q','Quantité'],['pu','Prix de vente (€/u)'],['st','Statut','s',ST],['tp','Transporteur','s',TP],['su','N° de suivi','t'],['de','Date d’expédition','d'],['fdt','Fonds attendus','c','d'],['pays','Pays','s',PAYS],['tot','Montant','c','e'],['ben','Bénéfice','c','e'],['tv','Temps de vente (j)','c','n'],['rt','Retour : article','s',['','Récupéré','Perdu']],['fr','Retour : frais (€)'],['al','Alerte','c','t']];
+const VEC=[['n','Article','t'],['da','Date d’entrée','d'],['ni','Niche','s',NI],['de','Demande','s',FQ],['vi','Vitesse','s',VQ],['co','Concurrence','s',CQ],['pr','Prix vendu réel (€)'],['cp','Coût unitaire : produit + transport (€)'],['cf','Conformité','s',CF],['ty','Type','s',TY],['cx','Coefficient','c','x'],['j7','Contrôle J+7 : date','c','d'],['c7','État J+7','s',BA],['j30','Contrôle J+30 : date','c','d'],['c30','État J+30','s',BA],['v','Verdict conseillé','c','t'],['vm','Mon verdict','s',VM]];
+function rCmd(){H('#cmd',S.cd.map((c,i)=>{const f=(l,p,t,o)=>`<label>${l}${inp('cd.'+i+'.'+p,t,o)}</label>`;
+return`<div class="c oc"><div class="hd"><b>${inp('cd.'+i+'.n','text')}</b><span>${cc('cd',i,'st','t')}</span><button class="btn x" data-del="cd.${i}">Supprimer</button></div>
+<div class="g">${f('Date de commande','d','date')}${f('Transitaire','tf','',tro())}${f('Frais totaux du transitaire (€)','fr')}</div>
+<div class="sc" style="margin-top:10px"><table><tr><th>Produit</th><th>Quantité</th><th>Prix fournisseur (€/u)</th><th>Transport (€/u)</th><th>Coût unitaire (€)</th><th>Prix de vente estimé (€)</th><th>Coefficient</th><th>Gain par article</th><th>Rentabilité</th><th>Prix minimum</th><th>Vendus</th><th>Stock</th><th></th></tr>${c.ln.map((l,j)=>{const p='cd.'+i+'.ln.'+j+'.',x=i+'.'+j;return`<tr><td>${inp(p+'n','text')}</td><td>${inp(p+'q')}</td><td>${inp(p+'pu')}</td><td>${cc('ln',x,'u','e')}</td><td>${cc('ln',x,'cu','e')}</td><td>${inp(p+'pv')}</td><td>${cc('ln',x,'cD','x')}</td><td>${cc('ln',x,'mg','e')}</td><td>${cc('ln',x,'v','t')}</td><td>${cc('ln',x,'pmin','e')}</td><td>${cc('ln',x,'vd','n')}</td><td>${cc('ln',x,'stock','n')}</td><td><button class="btn x" data-del="cd.${i}.ln.${j}">✕</button></td></tr>`}).join('')}</table></div>
+<div class="row"><button class="btn a" data-addln="${i}">Ajouter un produit à cette commande</button></div><div data-d="${i}" class="mut"></div>
+<details><summary>Suivi du colis et réception</summary><div class="g" style="margin-top:8px">${f('Prestataire d’envoi (transporteur)','pv','text')}${f('N° de suivi','su','text')}${f('Date d’envoi du colis','de','date')}${f('Date de réception','dr','date')}${f('Pièces abîmées ou manquantes','pa')}</div></details></div>`}).join(''))}
+function cdl(i){const c=S.cd[i],k=cq(i);return k.pc?`Frais <b>${E(k.tot)}</b> ÷ <b>${k.pc}</b> pièce(s) = <b>${E(k.fpp)}</b> de transport par article, ajouté au prix fournisseur de chaque produit.`:'Ajoute des produits à cette commande.'}
+function rLines(){H('#lnt','<tr><th>Produit</th><th>Commande</th><th>Quantité</th><th>Prix fournisseur (€/u)</th><th>Prix de vente estimé (€)</th><th>Coût unitaire</th><th>Stock</th></tr>'+LN().map(({c,l,i,j})=>{const p=`cd.${i}.ln.${j}.`,x=i+'.'+j;return`<tr><td>${inp(p+'n','text')}</td><td>${esc(c.n)}</td><td>${inp(p+'q')}</td><td>${inp(p+'pu')}</td><td>${inp(p+'pv')}</td><td>${cc('ln',x,'cu','e')}</td><td>${cc('ln',x,'stock','n')}</td></tr>`}).join(''))}
+const NXT={'À expédier':['Expédié','Marquer expédié'],'Expédié':['Livré','Marquer livré'],'Livré':['Fonds reçus','Fonds reçus (confirmé)']};
+function rPipe(){const cl_={'À expédier':'wn','Expédié':'in','Livré':'in','Fonds reçus':'ok','Remboursé / retour':'bad'};
+H('#pipe',ST.map(s=>{const ix=S.sa.map((x,i)=>i).filter(i=>S.sa[i].st===s),m=ix.reduce((a,i)=>a+cs(i).tot,0);
+return`<div class="pc"><b><span class="tag ${cl_[s]}">${s}</span> ${ix.length}</b> <span class="mut">${E(m)}</span>${ix.map(i=>{const x=S.sa[i],k=cs(i),f=lf(x.l),n=NXT[s];
+return`<div class="sl"><b>${esc(f?f.l.n:'Produit supprimé')}</b> × ${x.q} · ${E(k.tot)}<div class="mut">Vendu le ${x.d||'—'}${fin(ago(x.d))?' · il y a '+ago(x.d)+' j':''} · bénéfice ${E(k.ben)}${k.fd&&s!=='Fonds reçus'?' · fonds attendus vers le '+fmtD(k.fd)+(k.late?' <span class="tag bad">en retard</span>':''):''} ${k.al==='EN RETARD'?'<span class="tag bad">EN RETARD</span>':''}${k.al==='Dates incohérentes'?'<span class="tag bad">dates incohérentes</span>':''}</div>
+${s==='Remboursé / retour'?`<div class="g" style="margin-top:6px"><label>Article${inp('sa.'+i+'.rt','',['','Récupéré','Perdu'])}</label><label>Frais de retour (€)${inp('sa.'+i+'.fr')}</label></div>`:`<div class="g" style="margin-top:6px"><label>Transporteur${inp('sa.'+i+'.tp','',TP)}</label><label>N° de suivi<input data-p="sa.${i}.su" type="text" value="${esc(x.su)}"></label></div>`}
+<div class="row" style="margin:6px 0 0">${n?`<button class="btn" data-st="${i}:${n[0]}">${n[1]}</button>`:''}${s!=='Remboursé / retour'?`<button class="btn a" data-st="${i}:Remboursé / retour">Retour</button>`:`<button class="btn a" data-st="${i}:À expédier">Rouvrir</button>`}<button class="btn x" data-del="sa.${i}">✕</button></div></div>`}).join('')}</div>`}).join(''))}
+function rNf(){const f=S.nf,ls=LN();if(!f.l||!ls.some(x=>x.l.id===f.l))f.l=ls[0]?.l.id||'';if(!f.q)f.q=1;if(!f.d)f.d=today();if(!f.pays)f.pays='France';if(!f.tp)f.tp='Mondial Relay';if(f.pu===undefined||f.pu===''){const x=lf(f.l);f.pu=x?x.l.pv:0}
+H('#nf',[['Produit','l','',lno()],['Quantité','q'],['Prix de vente (€ par article)','pu'],['Date de mise en ligne','dl','date'],['Date de vente','d','date'],['Pays du client','pays','',PAYS],['Transporteur','tp','',TP]].map(k=>`<label>${k[0]}${inp('nf.'+k[1],k[2],k[3])}</label>`).join(''))}
+function rTrg(){H('#trg',S.tr.map((t,i)=>`<div class="c oc"><div class="hd"><b>${inp('tr.'+i+'.n','text')}</b><span><button class="btn a" data-addsv="${i}">Ajouter un service</button> <button class="btn x" data-del="tr.${i}">Supprimer</button></span></div><div class="sc"><table><tr><th>Service</th><th>Diviseur (0 = aucun)</th><th>Poids min (kg)</th><th>Forfaits 1, 2, 3… kg</th><th>Palier A : moins de (kg)</th><th>A : RMB/kg</th><th>A : fixe</th><th>Palier B : jusqu’à (kg)</th><th>B : RMB/kg</th><th>B : fixe</th><th>Au-delà : RMB/kg</th><th>Au-delà : fixe</th><th></th></tr>${t.sv.map((s,j)=>`<tr>${[['n','text'],['d'],['mn'],['fl','text'],['am'],['ap'],['af'],['bm'],['bp'],['bf'],['cp'],['cf']].map(k=>`<td>${inp('tr.'+i+'.sv.'+j+'.'+k[0],k[1])}</td>`).join('')}<td><button class="btn x" data-del="tr.${i}.sv.${j}">✕</button></td></tr>`).join('')}</table></div></div>`).join(''))}
+function rColIn(){H('#colin',[['par.rate','Taux (RMB pour 1 €)'],['cs.L','Longueur carton (cm)'],['cs.l','Largeur carton (cm)'],['cs.H','Hauteur carton (cm)'],['cs.wr','Poids réel d’un carton (kg)'],['cs.n','Nombre de cartons'],['cs.pc','Nombre de pièces']].map(k=>`<label>${k[1]}${inp(k[0])}</label>`).join(''))}
+function rRes(){const r=colis(),ok=r.filter(x=>fin(x.tt)),best=ok.length?Math.min(...ok.map(x=>x.tt)):NaN;let last='',h='<tr><th>Transitaire / service</th><th>Poids facturé</th><th>Coût total</th><th>Par pièce</th><th>Écart avec le moins cher</th></tr>';
+r.forEach(x=>{if(x.t!==last){h+=`<tr class="g1"><td colspan="5">${esc(x.t)}</td></tr>`;last=x.t}h+=`<tr><td>${esc(x.n)}</td>${fin(x.tt)?`<td>${N(x.w)} kg (${x.vol>x.re?'volumétrique':'réel'})</td><td class="${x.tt===best?'w':''}">${E(x.tt)}</td><td class="${x.tt===best?'w':''}">${E(x.pp)}</td><td>${x.tt===best?'Le moins cher':'+'+E(x.tt-best)}</td>`:`<td colspan="4">Pas de tarif pour ce poids (minimum non atteint)</td>`}</tr>`});H('#res',h);
+const W=[1,2,3,5,10,15,20,21,30,50,100];H('#wt','<tr><th>Service</th>'+W.map(w=>`<th>${w} kg</th>`).join('')+'</tr>'+S.tr.map(t=>`<tr class="g1"><td colspan="${W.length+1}">${esc(t.n)}</td></tr>`+t.sv.map(s=>`<tr><td>${esc(s.n)}</td>${W.map(w=>`<td>${E(fwc(s,w)/S.par.rate)}</td>`).join('')}</tr>`).join('')).join(''))}
+function rSum(){H('#cds','<tr><th>Transitaire</th><th>Commandes</th><th>Pièces</th><th>Frais par pièce</th><th>Délai moyen (jours)</th><th>% problèmes</th><th>Verdict</th></tr>'+S.tr.map(t=>{const ix=S.cd.map((c,i)=>i).filter(i=>S.cd[i].tf===t.id),q=ix.map(cq),pc=q.reduce((a,x)=>a+x.pc,0),fr=q.reduce((a,x)=>a+x.tot,0),dl=q.map(x=>x.dl).filter(fin),av=dl.length?dl.reduce((a,b)=>a+b)/dl.length:NaN,pb=pc?ix.reduce((a,i)=>a+S.cd[i].pa,0)/pc:NaN,v=!ix.length?'—':!dl.length?'DONNÉES INCOMPLÈTES':av>S.par.dmax||pb>.05?'À SURVEILLER':'FIABLE';
+return`<tr><td>${esc(t.n)}</td><td>${ix.length}</td><td>${pc}</td><td>${E(pc?fr/pc:NaN)}</td><td>${N(av,0)}</td><td>${fmt(pb,'p')}</td><td><span class="tag ${v==='FIABLE'?'ok':v==='À SURVEILLER'?'bad':'wn'}">${v}</span></td></tr>`}).join(''))}
+const bars=(it,f)=>{const m=Math.max(1,...it.map(x=>Math.abs(x[1])));return it.length?it.map(x=>`<div class="br"><span>${esc(x[0])}</span><div class="bt"><i style="width:${Math.max(2,Math.abs(x[1])/m*100)}%;${x[1]<0?'background:var(--bad)':''}"></i></div><b>${f(x[1])}</b></div>`).join(''):'<p class="mut">Pas encore de données.</p>'};
+function rVtop(){const it=S.ve.map((v,i)=>[v.n,cv(i).cx]).filter(x=>fin(x[1])&&x[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,8);H('#vtop',it.length?bars(it,x=>'x'+N(x,2)):'<p class="mut">Renseigne le prix vendu réel et le coût unitaire pour voir le classement.</p>')}
+function notifs(){const o=[],SA=S.sa.map((x,i)=>[x,cs(i)]),add=(lv,t,d,go)=>o.push({lv,t,d,go});
+const ex=SA.filter(([x])=>x.st==='À expédier');if(ex.length){const a=Math.max(...ex.map(([x])=>ago(x.d)||0));add(a>=3?'bad':'wn',ex.length+' colis à expédier','Le plus ancien attend depuis '+a+' jour(s).','t1')}
+const ns=SA.filter(([x])=>x.st==='Expédié'&&!x.su);if(ns.length)add('wn',ns.length+' colis expédié(s) sans n° de suivi','Ajoute le suivi pour prouver l’envoi.','t1');
+const pe=SA.filter(([x,k])=>['Expédié','Livré'].includes(x.st)&&(x.de?k.late:ago(x.d)>=10));if(pe.length)add('wn',pe.length+' vente(s) dont les fonds auraient déjà dû arriver',E(pe.reduce((s,[,k])=>s+k.tot,0))+' pas encore disponibles : vérifie le suivi et relance l’acheteur.','t1');
+const rt=SA.filter(([x])=>x.st==='Remboursé / retour'&&!x.rt);if(rt.length)add('wn',rt.length+' retour(s) à qualifier','Indique si l’article est récupéré ou perdu et les frais : ils comptent dans tes pertes.','t1');
+S.ve.forEach(v=>{if(v.da&&v.vm!=='Écarter'){if(ago(v.da)>=7&&!v.c7)add('wn','Contrôle J+7 à faire : '+v.n,'Regarde si la demande tient et note Monte, Stable ou Baisse.','t4');if(ago(v.da)>=30&&!v.c30)add('wn','Contrôle J+30 à faire : '+v.n,'Même vérification après un mois.','t4')}});
+const ko=SA.filter(([,k])=>k.al==='Dates incohérentes');if(ko.length)add('bad',ko.length+' vente(s) avec une date de vente avant la mise en ligne','Corrige les dates.','t1');
+LN().forEach(({c,l,i,j})=>{const k=cl(i,j);if(k.stock>0&&k.stock<=2)add('wn','Stock bas : '+l.n,k.stock+' pièce(s) restante(s). Prévois un réassort si ça se vend bien.','t2');if(k.stock<=0&&k.vd>0)add('in','Stock épuisé : '+l.n,'Tout est vendu : réassort possible.','t2');
+if(c.dr&&k.vd===0&&ago(c.dr)>=14)add('wn','Aucune vente de « '+l.n+' » depuis '+ago(c.dr)+' jours','Revois le prix, le titre ou les photos.','t2');if(k.v==='PAS ASSEZ RENTABLE')add('in',l.n+' sous l’objectif x'+N(S.par.cm,2),'Prix minimum conseillé : '+E(k.pmin)+'.','t2')});
+S.cd.forEach((c,i)=>{const k=cq(i);if(!c.dr&&c.d&&k.att>S.par.dmax)add('bad',c.n+' non reçue après '+k.att+' jours','Relance le transitaire.','t2');if(c.de&&!c.su)add('wn',c.n+' : n° de suivi manquant','Note-le pour suivre le colis.','t2');if(c.pa>0)add('in',c.n+' : '+c.pa+' pièce(s) abîmée(s) ou manquante(s)','Fais une réclamation au transitaire.','t2')});
+const n=new Date(),c=ym(n),pm=ym(new Date(n.getFullYear(),n.getMonth()-1,1)),dim=new Date(n.getFullYear(),n.getMonth()+1,0).getDate(),d=n.getDate(),ob=obj(c),r=agg(c),rp=agg(pm);
+if(ob>0){if(r.net>=ob)add('ok','Objectif du mois atteint','Bénéfice net final : '+E(r.net)+' pour '+E(ob)+' visés.','t0');else if(d>=5&&r.net<ob*d/dim)add('bad','En retard sur l’objectif de '+ML(c),E(r.net)+' sur '+E(ob*d/dim)+' attendus à ce jour. Il reste '+E(ob-r.net)+' en '+(dim-d)+' jour(s), soit '+E((ob-r.net)/Math.max(1,dim-d))+' par jour.','t0')}
+if(obj(pm)>0&&rp.net<obj(pm)&&S.sa.some(x=>mk(x.d)===pm))add('wn','Objectif du mois dernier non atteint ('+ML(pm)+')',E(rp.net)+' sur '+E(obj(pm))+'.','t0');
+const per=S.par.fq==='Mensuelle'?[pm]:[0,3,6,9].includes(n.getMonth())?[1,2,3].map(j=>ym(new Date(n.getFullYear(),n.getMonth()-j,1))):[];
+if(per.length&&d>=15){const ca=per.reduce((s,m)=>s+agg(m).caR,0);if(ca>0)add('wn','Déclaration de chiffre d’affaires à faire avant le '+dim+'/'+String(n.getMonth()+1).padStart(2,'0'),'CA encaissé de la période : '+E(ca)+' → cotisations estimées : '+E(ca*cotp()/100)+' (à confirmer sur autoentrepreneur.urssaf.fr).','t5')}
+const cy=S.sa.reduce((s,x,i)=>mk(x.d).slice(0,4)===String(n.getFullYear())?s+cs(i).real:s,0);if(cy>203100*.8)add('bad','Plafond de chiffre d’affaires bientôt atteint',E(cy)+' sur 203 100 € cette année.','t5');
+if(!NETMODE&&!LS('rev_pin'))add('in','Protège ton dashboard','Crée un code d’accès dans Paramètres.','t5');
+if(SY==='err')add('bad','Synchronisation en attente','Tes modifications sont gardées sur cet appareil et partiront dès que la base en ligne répond.','t5');if(SY==='local')add('in','Données sur cet appareil seulement','Ouvre le lien dans claude.ai (même compte) pour retrouver tes données sur tous tes appareils.','t5');
+if(!o.length)add('ok','Tout est à jour','Aucun rappel pour le moment.','');return o}
+function rNot(){const o=notifs(),n=o.filter(x=>x.lv==='bad'||x.lv==='wn').length,b=$('#bc');b.hidden=!n;b.textContent=n;H('#np','<b style="display:block;padding:4px 8px">Notifications</b>'+o.map(x=>`<button class="nt ${x.lv}" data-go="${x.go}"><b>${esc(x.t)}</b><span>${esc(x.d)}</span></button>`).join(''))}
+function rDash(){const m=curM(),r=agg(m),s=stk(),ob=m?obj(m):0,ye=(m||ym(new Date())).slice(0,4),cy=S.sa.reduce((a,x,i)=>mk(x.d).slice(0,4)===ye?a+cs(i).real:a,0);
+const mo=[];for(let j=5;j>=0;j--){const b=(m||ym(new Date())).split('-'),k=ym(new Date(+b[0],+b[1]-1-j,1)),a=agg(k);mo.push([k,a.caR,a.net])}const mx=Math.max(1,...mo.map(x=>Math.max(x[1],x[2])));
+const tot=r.caR+r.caP+r.ref||1,pp=LN().map(({l})=>[l.n,S.sa.reduce((a,x,j)=>x.l===l.id&&inM(x.d,m)?a+cs(j).benR:a,0)]).filter(x=>x[1]!==0).sort((a,b)=>b[1]-a[1]).slice(0,6);
+const kp=(l,v,sub,cl)=>`<div class="c"><div class="mut">${l}</div><div class="big ${cl||''}">${E(v)}</div><div class="mut">${sub}</div></div>`,row=(l,v,b)=>`<tr${b?' class="sum"':''}><td>${l}</td><td class="${b&&v<0?'neg':b?'pos':''}">${E(v)}</td></tr>`;
+const pays=PAYS.map(p=>[p,S.sa.reduce((a,x,i)=>x.pays===p&&inM(x.d,m)?a+cs(i).real+cs(i).pend:a,0)]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]);
+const NX=(()=>{const a=S.sa.map((x,i)=>[x,cs(i)]).filter(([x,k])=>k.fd&&PEND.includes(x.st)).sort((p,q)=>p[1].fd<q[1].fd?-1:1).slice(0,6);return a.length?a.map(([x,k])=>{const f=lf(x.l);return`<div class="br" style="grid-template-columns:1fr auto auto"><span>${esc(f?f.l.n:'—')} · ${esc(x.tp||'')}</span><span class="${k.late?'neg':'mut'}">${fmtD(k.fd)}</span><b>${E(k.tot)}</b></div>`}).join(''):'<p class="mut">Les dates apparaissent dès qu’un colis est marqué expédié.</p>'})();
+H('#dash',`<div class="k">${kp('CA réel (fonds reçus)',r.caR,'Colis reçu et confirmé · '+ML(m))}${kp('CA en attente',r.caP,'dont '+E(r.soon)+' attendus d’ici 7 jours')}${kp('Bénéfice',r.ben,'CA réel − coût unitaire des articles vendus','pos')}${kp('Total des pertes',r.loss,'Remboursements et retours à nos frais',r.loss?'neg':'')}</div>
+<div class="cols"><div class="c"><h3>Du chiffre d’affaires au bénéfice net final</h3><div class="sc"><table>${row('CA réel',r.caR)}${row('− Coût unitaire des articles vendus',-(r.caR-r.ben))}${row('= Bénéfice',r.ben,1)}${row('− Pertes',-r.loss)}${row('− Cotisations ('+N(cotp(),2)+' % du CA réel)',-r.cot)}${row('= Bénéfice net final',r.net,1)}</table></div><p class="mut">Le bénéfice net final est ce qu’il te reste réellement.</p></div>
+<div class="c"><h3>Objectif de ${ML(m||ym(new Date()))}</h3>${m?`<div class="big ${ob>0&&r.net>=ob?'pos':''}">${E(r.net)} <span class="mut" style="font-size:.95rem">sur ${E(ob)}</span></div><div class="bt" style="margin:8px 0"><i style="width:${ob>0?Math.max(0,Math.min(100,r.net/ob*100)):0}%"></i></div><label style="max-width:190px">Objectif du mois (€ de bénéfice net final)<input data-p="obm.${m}" type="number" step="any" inputmode="decimal" value="${S.obm[m]??S.par.ob}"></label><p class="mut">${ob>0?(r.net>=ob?'Objectif atteint.':'Il manque '+E(ob-r.net)+'.'):'Aucun objectif (0).'}</p>`:'<p class="mut">Choisis un mois pour suivre ton objectif.</p>'}</div></div>
+<div class="cols"><div class="c"><h3>Ventes et bénéfice net final · 6 mois</h3><div class="mo">${mo.map(x=>`<div><p><i style="height:${x[1]/mx*100}%;background:var(--acc)"></i><i style="height:${Math.max(0,x[2])/mx*100}%;background:var(--ok)"></i></p>${x[0].slice(5)}/${x[0].slice(2,4)}</div>`).join('')}</div><p class="mut"><span style="color:var(--acc)">■</span> CA réel · <span style="color:var(--ok)">■</span> bénéfice net final</p></div>
+<div class="c"><h3>Statut des ventes</h3><div class="bt" style="height:16px;margin:8px 0"><i style="width:${r.caR/tot*100}%;background:var(--ok)"></i><i style="width:${r.caP/tot*100}%;background:#e0a02a"></i><i style="width:${r.ref/tot*100}%;background:var(--bad)"></i></div><p class="mut"><span style="color:var(--ok)">■</span> reçu ${E(r.caR)} · <span style="color:#e0a02a">■</span> en attente ${E(r.caP)} · <span style="color:var(--bad)">■</span> remboursé ${E(r.ref)}</p>${ST.map(x=>`<span class="tag ${x==='Fonds reçus'?'ok':x==='Remboursé / retour'?'bad':'wn'}">${x} : ${r.n[x]||0}</span> `).join('')}</div><div class="c"><h3>Prochains versements attendus</h3>${NX}<p class="mut">Date d’expédition + délai du transporteur + délai de confirmation (réglables dans Paramètres).</p></div></div>
+<h2>Stock</h2><div class="k">${kp('Coût du stock',s.c,'Prix fournisseur + transport des pièces restantes')}${kp('Valeur de revente',s.vr,'Pièces restantes × prix de vente estimé')}${kp('Bénéfice potentiel',s.b1,'Avant cotisations','pos')}${kp('Bénéfice potentiel après cotisations',s.a1,'Cotisations déduites ('+N(cotp(),2)+' %)','pos')}</div>
+<div class="sc"><table><tr><th>Produit</th><th>Commandé</th><th>Vendus</th><th>Stock</th><th>Coût du stock</th><th>Valeur de revente</th></tr>${LN().map(({l,i,j})=>{const k=cl(i,j);return`<tr><td>${esc(l.n)}</td><td>${l.q}</td><td>${k.vd}</td><td>${Math.max(0,k.stock)}</td><td>${E(k.cs)}</td><td>${E(Math.max(0,k.stock)*l.pv)}</td></tr>`}).join('')}</table></div>
+<div class="cols"><div class="c"><h3>Top produits (bénéfice réel)</h3>${bars(pp,E)}</div><div class="c"><h3>Ventes par pays (CA)</h3>${bars(pays,E)}</div></div>
+<p class="mut">Plafond annuel de chiffre d’affaires (vente de marchandises) : ${E(cy)} sur 203 100 € (${N(cy/203100*100,1)} %).</p>`)}
+function rPrm(){H('#prm',`<h2 style="margin-top:6px">Cotisations de micro-entrepreneur</h2><div class="c"><div class="g"><label>Cotisations sociales (%)${inp('par.cb')}</label><label>Contribution formation pro. CFP (%)${inp('par.cf')}</label><label>Versement libératoire de l’impôt (1 %)${inp('par.vl','',['Non','Oui'])}</label><label>Déclaration${inp('par.fq','',['Mensuelle','Trimestrielle'])}</label><label>Taux total appliqué<b id="ct" style="font-size:1.3rem;color:var(--fg)"></b></label></div>
+<p class="mut">Vente de marchandises, 2026, d’après les sources consultées : 12,3 % de cotisations, 0,1 % de CFP (0,2 % selon certaines), versement libératoire de l’impôt à 1 % si tu y as droit, ACRE possible la première année. Plafond de chiffre d’affaires : 203 100 €. Confirme sur autoentrepreneur.urssaf.fr.</p></div>
+<h2>Objectifs et réglages</h2><div class="c"><div class="g"><label>Objectif mensuel par défaut (€ de bénéfice net final)${inp('par.ob')}</label><label>Coefficient minimum visé (x)${inp('par.cm')}</label><label>Taux RMB pour 1 €${inp('par.rate')}</label><label>Délai maximum d’une commande (jours)${inp('par.dmax')}</label><label>Mon mantra du mois${inp('par.mant','text')}</label></div></div>
+<h2>Livraison et versement des fonds</h2><div class="c"><div class="g">${TP.map(t=>`<label>Délai de livraison : ${t} (jours)${inp('par.dl.'+t)}</label>`).join('')}<label>Délai de confirmation après livraison (jours)${inp('par.conf')}</label></div><p class="mut">Estimations de départ à ajuster d’après tes colis. Elles servent à prévoir la date à laquelle le CA en attente devient disponible.</p></div>
+<h2>Synchronisation entre appareils</h2><div class="c"><p id="syd" style="margin:0 0 8px"></p><div class="row"><button class="btn" data-sync>Synchroniser maintenant</button></div>${NETMODE?'<p class="mut">Tes données sont dans la base en ligne de ce site, protégée par ton code. Elles se mettent à jour toutes les 10 secondes et à chaque retour sur l’application. Si deux appareils modifient la même ligne en même temps, la modification la plus récente l’emporte ; toutes les autres lignes sont conservées.</p>':'<p class="mut">Tes données sont enregistrées dans ta base en ligne (compte claude.ai). Ouvre ce même lien, connecté au même compte, sur ton téléphone, ta tablette ou un autre ordinateur : tu retrouves les mêmes données, mises à jour en direct. Si deux appareils modifient la même ligne en même temps, la modification la plus récente l’emporte ; toutes les autres lignes sont conservées.</p>'}</div>
+<h2>Sauvegarde et accès</h2><div class="c"><div class="row"><button class="btn a" data-x="json">Exporter une sauvegarde (JSON)</button><button class="btn a" data-x="csv">Exporter en tableur (CSV)</button><label class="btn a" style="flex-direction:row;font-size:1rem;cursor:pointer">Importer une sauvegarde<input id="imp" type="file" accept=".json" hidden></label></div>
+<p class="mut">Dans claude.ai, tes données se synchronisent entre tes appareils (même compte). Hors de claude.ai, elles restent sur l’appareil : utilise la sauvegarde pour les déplacer.</p>
+${NETMODE?'<div class="row"><button class="btn a" data-logout>Se déconnecter de cet appareil</button></div><p class="mut">Ton code ouvre tes données depuis n’importe quel appareil. Il n’est pas récupérable : garde-le précieusement.</p>':'<div class="row"><input id="npin" type="password" placeholder="Nouveau code (4 caractères minimum)" style="max-width:300px"><button class="btn" data-pin="set">Enregistrer le code</button><button class="btn a" data-pin="off">Retirer le code</button></div><p class="mut">Le code est demandé à chaque ouverture sur cet appareil : il bloque un accès rapide, il ne chiffre pas les données.</p>'}</div>`)}
+function upd(ns){$$('[data-c]').forEach(s=>{const[a,i,f]=s.dataset.c.split(':'),v=C[a](i)[f];s.textContent=fmt(v,s.dataset.m);if(s.dataset.m==='t')s.className=v?'tag '+(PC.includes(v)?'ok':WC.includes(v)?'wn':'bad'):''});
+$$('[data-d]').forEach(e=>{e.innerHTML=cdl(+e.dataset.d)});const ct=$('#ct');if(ct)ct.textContent=N(cotp(),2)+' %';rRes();rSum();rVtop();
+const A=document.activeElement,pp=A&&A.dataset&&A.dataset.p,ps=A&&A.selectionStart;rDash();if(pp&&A.closest&&A.closest('#dash')){const n=$('#dash [data-p="'+pp+'"]');if(n){n.focus();try{n.setSelectionRange(ps,ps)}catch(x){}}}
+const mi=$('#mi');if(mi&&document.activeElement!==mi)mi.value=S.mo==='all'?'':S.mo;rNot();if(!ns)save()}
+function rAll(ns){rNf();rPipe();rColIn();rTrg();rCmd();rLines();tbl('#sat','sa',SAC);tbl('#vet','ve',VEC);rPrm();mind();upd(ns)}
+const mind=()=>{$('#mind').textContent=S.par.mant||MIND[Math.floor(Math.random()*MIND.length)]};
+const csv=()=>'\ufeff'+[['Commandes',S.cd.map(c=>({...c,ln:c.ln.map(l=>l.n+' x'+l.q).join(' | ')}))],['Ventes',S.sa],['Veille',S.ve]].map(([t,a])=>{const k=Object.keys(a[0]||{}),q=v=>{v=String(v??'').replace('.',',');return/[;"\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};return t+'\n'+k.join(';')+'\n'+a.map(r=>k.map(x=>q(r[x])).join(';')).join('\n')}).join('\n\n');
+const dl=async(n,d)=>{try{const c=window.claude;if(c){const u=await c.use('downloads');if(!u){alert('Export indisponible dans cette vue.');return}await u.save({filename:n,data:d});return}const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([d],{type:'text/plain'}));a.download=n;a.click()}catch(e){}};
+function go(t){$$('section,.side button[data-t]').forEach(x=>x.classList.remove('on'));$('#'+t).classList.add('on');const b=$('.side button[data-t="'+t+'"]');if(b)b.classList.add('on');$('#np').hidden=true}
+document.addEventListener('input',e=>{const p=e.target.dataset.p;if(!p)return;sp(p,e.target.type==='number'?(parseFloat(e.target.value)||0):e.target.value);touch(p);upd()});
+document.addEventListener('change',e=>{const t=e.target,p=t.dataset.p||'';let m;
+if(t.id==='imp'&&t.files[0]){const r=new FileReader();r.onload=()=>{try{const o=mig(JSON.parse(r.result)),n=Date.now();AR.forEach(k=>o[k].forEach(x=>x._t=n));o.tp=n;S=o;rAll()}catch(x){alert('Fichier de sauvegarde invalide.')}};r.readAsText(t.files[0])}
+if(/^cd\.\d+(\.ln\.\d+)?\.n$/.test(p)){rNf();rPipe();rLines();tbl('#sat','sa',SAC);upd()}
+if(/^(cd|tr)\.\d+\.tf$/.test(p))upd();
+if(m=p.match(/^sa\.(\d+)\.(d|dl)$/)){const x=S.sa[+m[1]];if(x.d&&x.dl&&x.d<x.dl){alert('La date de mise en ligne doit être avant la date de vente.');x._t=Date.now();x[m[2]==='d'?'d':'dl']=m[2]==='d'?x.dl:x.d;tbl('#sat','sa',SAC);upd()}}
+if(p==='nf.l'){const f=lf(S.nf.l);S.nf.pu=f?f.l.pv:0;rNf()}
+if(/^sa\./.test(p))rPipe();
+if(/^sa\.\d+\.l$/.test(p)){const x=S.sa[+p.split('.')[1]],f=lf(x.l);if(f&&!x.pu){x.pu=f.l.pv;x._t=Date.now();tbl('#sat','sa',SAC);upd()}}});
+document.addEventListener('click',e=>{const t=e.target.closest('button')||e.target,d=t.dataset||{};
+if(d.t)go(d.t);if(d.go!==undefined&&t.classList.contains('nt')){if(d.go)go(d.go);$('#np').hidden=true}
+if(t.id==='bell')$('#np').hidden=!$('#np').hidden;if(e.target.id==='mind')mind();
+if(d.m!==undefined){if(d.m==='0')S.mo='all';else{const bs=S.mo&&S.mo!=='all'?S.mo:ym(new Date()),[y,k]=bs.split('-');S.mo=ym(new Date(+y,+k-1+ +d.m,1))}upd()}
+if(d.add){const r=ADD[d.add]();r._t=Date.now();S[d.add].push(r);rAll()}
+if(d.addln!==undefined){const i=d.addln===''?S.cd.length-1:+d.addln;if(!S.cd[i])alert('Crée d’abord une commande.');else{S.cd[i].ln.push(ADD.ln());S.cd[i]._t=Date.now();rAll()}}
+if(d.addsv!==undefined){S.tr[+d.addsv].sv.push(SV(uid(),'Nouveau service',6000,0,0,0,0));S.tr[+d.addsv]._t=Date.now();rAll()}
+if(d.st){const[i,s]=d.st.split(':');S.sa[+i].st=s;S.sa[+i]._t=Date.now();if(s==='Expédié'&&!S.sa[+i].de)S.sa[+i].de=today();rPipe();tbl('#sat','sa',SAC);upd()}
+if(d.newsale!==undefined){const f=S.nf;if(!f.l||!(f.q>0)||!(f.pu>0))alert('Choisis un produit, une quantité et un prix.');else if(f.dl&&f.d&&f.d<f.dl)alert('La date de mise en ligne doit être avant la date de vente.');else{S.sa.push({id:uid(),l:f.l,dl:f.dl||'',d:f.d,pays:f.pays,q:f.q,pu:f.pu,st:'À expédier',su:'',fr:0,rt:'',tp:f.tp||'Mondial Relay',de:'',_t:Date.now()});S.nf={};rAll()}}
+if(d.del){const k=d.del.split('.'),i=+k.pop(),arr=gp(k.join('.'));if(k.length===1){const x=arr[i];if(x&&x.id)S.del[x.id]=Date.now()}else touch(k.join('.'));arr.splice(i,1);rAll()}
+if(d.sync!==undefined)push(true);
+if(d.logout!==undefined){LS('rev_key',null);location.reload()}
+if(d.x==='json')dl('sauvegarde-revente.json',JSON.stringify(S,null,1));if(d.x==='csv')dl('export-revente.csv',csv());
+if(d.pin==='set'){const v=$('#npin').value;if(v.length<4)alert('Le code doit contenir au moins 4 caractères.');else{LS('rev_pin',hs(v));$('#npin').value='';alert('Code enregistré : il sera demandé à la prochaine ouverture.');rNot()}}
+if(d.pin==='off'){LS('rev_pin',null);rNot()}});
+function boot(){if(KEY){const j=LS(lk());S=j?mig(JSON.parse(j)):mig({})}$('#lock').hidden=true;$('#app').hidden=false;rAll();cloud()}
+function gateLocal(){const pin=LS('rev_pin');if(!pin){boot();return}$('#app').hidden=true;const l=$('#lock');l.hidden=false;
+l.innerHTML='<h2 style="margin-top:0">Code d’accès</h2><p class="mut">Entre ton code pour ouvrir ton dashboard.</p><input id="pc" type="password" autocomplete="off" placeholder="Code"><div class="row" style="justify-content:center"><button class="btn" id="go">Ouvrir</button></div><p class="neg" id="lm"></p><button class="btn x" id="rs">Code oublié</button>';
+const g=()=>{if(hs($('#pc').value)===pin)boot();else $('#lm').textContent='Code incorrect.'};$('#go').onclick=g;$('#pc').onkeydown=e=>{if(e.key==='Enter')g()};
+$('#rs').onclick=()=>{if(confirm('Réinitialiser efface les données enregistrées sur cet appareil. Importe ensuite ta sauvegarde pour les retrouver. Continuer ?')){LS(lk(),null);LS('rev_pin',null);location.reload()}}}
+function gateNet(){const k=LS('rev_key');if(k){KEY=k;boot();return}$('#app').hidden=true;const l=$('#lock');l.hidden=false;
+l.innerHTML='<h2 style="margin-top:0">Mon espace revente</h2><p class="mut">Entre ton code pour retrouver tes données sur cet appareil. Première fois ? Crée un code d’au moins 8 caractères : garde-le précieusement, il ouvre tes données depuis n’importe quel appareil.</p><input id="pc" type="password" autocomplete="current-password" placeholder="Code (8 caractères minimum)"><label style="flex-direction:row;align-items:center;gap:8px;margin:10px 0"><input id="rm" type="checkbox" checked style="width:auto"> Rester connecté sur cet appareil</label><div class="row" style="justify-content:center"><button class="btn" id="go">Ouvrir mon espace</button><button class="btn a" id="nw">Créer un nouvel espace</button></div><p class="neg" id="lm"></p>';
+const run=async cr=>{const c=$('#pc').value;if(c.length<8){$('#lm').textContent='8 caractères minimum.';return}$('#lm').textContent='Connexion…';
+try{KEY=await sha(c);const r=await netGet();if(!r&&!cr){$('#lm').textContent='Aucun espace pour ce code. Vérifie le code, ou choisis « Créer un nouvel espace ».';KEY='';return}
+if(r&&cr){$('#lm').textContent='Ce code existe déjà : utilise « Ouvrir mon espace ».';KEY='';return}if($('#rm').checked)LS('rev_key',KEY);boot()}
+catch(e){KEY='';$('#lm').textContent=e.message==='404'?'Ce site n’a pas la fonction de synchronisation (voir LISEZ-MOI).':'Connexion impossible, réessaie.'}};
+$('#go').onclick=()=>run(false);$('#nw').onclick=()=>run(true);$('#pc').onkeydown=e=>{if(e.key==='Enter')run(false)}}
+const gate=()=>NETMODE?gateNet():gateLocal();
+addEventListener('online',()=>push());
+document.addEventListener('focusout',()=>{if(!pend)return;setTimeout(()=>{const a=document.activeElement;if(pend&&!(a&&/INPUT|SELECT/.test(a.tagName||''))){pend=false;rAll(true)}},200)});
+gate();
+</script></body></html>
